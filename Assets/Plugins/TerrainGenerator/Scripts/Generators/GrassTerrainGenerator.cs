@@ -35,14 +35,7 @@ public class GrassTerrainGenerator : MonoBehaviour
         {
             for (int x = 0; x < detailResolution; x++)
             {
-                if (Random.value > 0.01f)
-                {
-                    detailMap[x, y] = 1;
-                }
-                else
-                {
-                    detailMap[x, y] = 0;
-                }
+                detailMap[x, y] = 1;
             }
         }
         terrainData.SetDetailLayer(0, 0, 0, detailMap);

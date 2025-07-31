@@ -261,7 +261,7 @@ MonoBehaviour:
   m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
+  m_SoftShadowQuality: 1
 --- !u!1001 &595370055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -981,6 +981,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1259435443 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3833423336238244637, guid: 312d0394fe4967749a5f74e679aaa882,
+    type: 3}
+  m_PrefabInstance: {fileID: 595370055}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1812226461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1107,7 @@ GameObject:
   - component: {fileID: 1995096041}
   - component: {fileID: 1995096048}
   - component: {fileID: 1995096049}
+  - component: {fileID: 1995096050}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1216,10 +1223,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: ef5cb87efec64cb41ab9236352ff20d4, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 190
+  m_TreeBillboardDistance: 100
   m_TreeCrossFadeLength: 100
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 500
+  m_DetailObjectDistance: 100
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -1232,7 +1239,7 @@ Terrain:
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
-  m_BakeLightProbesForTrees: 1
+  m_BakeLightProbesForTrees: 0
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
   m_ReceiveGI: 1
@@ -1292,6 +1299,22 @@ MonoBehaviour:
   _grassTexture: {fileID: 2800000, guid: 5f244fcd3a2c9ed46851e5698376bae1, type: 3}
   _terrain: {fileID: 1995096045}
   _color: {r: 0.50980395, g: 0.6627451, b: 0.2, a: 1}
+--- !u!114 &1995096050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995096039}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4222a2e3c4d484f44b200d9b363c0084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _terrain: {fileID: 1995096045}
+  _player: {fileID: 1259435443}
+  _grassRadius: 200
+  _detailLayerIndex: 0
 --- !u!1 &2022669976
 GameObject:
   m_ObjectHideFlags: 0

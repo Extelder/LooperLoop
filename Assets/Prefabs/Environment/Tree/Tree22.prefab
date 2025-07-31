@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 5565050750522620692}
   - component: {fileID: 5366945368943209718}
   - component: {fileID: 2999856347304615789}
+  - component: {fileID: 8720555380552883637}
   m_Layer: 0
   m_Name: Tree22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &407719537046355364
 Transform:
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 1917986666273014060}
   - {fileID: 3899713544120144429}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5565050750522620692
 MeshFilter:
@@ -106,6 +107,27 @@ MonoBehaviour:
   destroyCombinedChildren: 0
   folderPath: Prefabs/CombinedMeshes
   meshFiltersToSkip: []
+--- !u!65 &8720555380552883637
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078378681883154507}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5764999, y: 14.461436, z: 1.5282059}
+  m_Center: {x: 0.055042267, y: 6.883016, z: 0.2902031}
 --- !u!1 &2624763303414058155
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +144,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &1917986666273014060
 Transform:
@@ -205,7 +227,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &3899713544120144429
 Transform:
