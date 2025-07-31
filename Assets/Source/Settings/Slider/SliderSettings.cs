@@ -10,6 +10,11 @@ public abstract class SliderSettings : MonoBehaviour
 
     private void OnEnable()
     {
+        OnEnableVirtual();
+    }
+
+    protected virtual void OnEnableVirtual()
+    {
         Slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 

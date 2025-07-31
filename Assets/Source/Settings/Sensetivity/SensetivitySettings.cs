@@ -1,24 +1,26 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class FPSSettings : SliderSettings
+public class SensetivitySettings : SliderSettings
 {
     [SerializeField] private TextMeshProUGUI _currentValueText;
 
+    private PlayerCharacter _character;
+
     protected override void OnEnableVirtual()
     {
-        float maxFpsSaved = PlayerPrefs.GetInt("FPS", 60);
+        _character = PlayerCharacter.Instance;
+        float sensetivity = PlayerPrefs.GetInt("Sensetivity", 1);
         base.OnEnableVirtual();
-        Slider.value = maxFpsSaved;
+        Slider.value = sensetivity;
     }
 
     protected override void OnSliderValueChanged(float value)
     {
-        Application.targetFrameRate = (int) value;
-        PlayerPrefs.SetInt("FPS", (int) value);
+        _character.Controller.lookSpeed = value;
+        PlayerPrefs.SetInt("Sensetivity", (int) value);
         _currentValueText.text = value.ToString();
     }
 }

@@ -1,24 +1,23 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class FPSSettings : SliderSettings
+public class VolumeSettings : SliderSettings
 {
     [SerializeField] private TextMeshProUGUI _currentValueText;
 
     protected override void OnEnableVirtual()
     {
-        float maxFpsSaved = PlayerPrefs.GetInt("FPS", 60);
+        float volume = PlayerPrefs.GetInt("Volume", 100);
         base.OnEnableVirtual();
-        Slider.value = maxFpsSaved;
+        Slider.value = volume;
     }
 
     protected override void OnSliderValueChanged(float value)
     {
-        Application.targetFrameRate = (int) value;
-        PlayerPrefs.SetInt("FPS", (int) value);
+        AudioListener.volume = value;
+        PlayerPrefs.SetInt("Volume", (int) value);
         _currentValueText.text = value.ToString();
     }
 }

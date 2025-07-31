@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86727df4afc86664ca06575e15dfa552, type: 3}
   m_Name: DefaultSword
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: DefaultSword
   <Id>k__BackingField: 0
   <Damage>k__BackingField: 5
   <Speed>k__BackingField: 0
