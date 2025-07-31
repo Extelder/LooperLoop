@@ -1702,14 +1702,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Octaves: 4
-  Scale: 4
+  Scale: 2
   Lacunarity: 2
   Persistance: 0.111
-  Offset: 4782.7197
+  Offset: 5555.3906
   MinLevel: 20
   MaxLevel: 100
   MaxSteepness: 70
-  IslandsSize: -0.8
+  IslandsSize: -0.6
   Density: 0.1
   Randomize: 1
   AutoUpdate: 0
@@ -1717,6 +1717,15 @@ MonoBehaviour:
   - {fileID: 8583129086449776606, guid: b54c90622492cc54ab21b23c6c103c2d, type: 3}
   - {fileID: 1026349296172590776, guid: 371b4b8bb396c534490927f0244f1c80, type: 3}
   - {fileID: 2078378681883154507, guid: 21febd6f5897b6b40843c799e9ec6480, type: 3}
+  - {fileID: 9197540064984474238, guid: 961bc67184cb33d4594f6b33322ee462, type: 3}
+  - {fileID: 5629285117204179580, guid: faaa58220da9430418766beb0d9a278c, type: 3}
+  - {fileID: 5604007587592962911, guid: de4a5f32e78b90b449280dfc8b090ce1, type: 3}
+  - {fileID: 8176778230220668989, guid: fa3489bcbc57b444ab34041743c96c36, type: 3}
+  - {fileID: 1935777103797408925, guid: bf2ec6ad525183f42ae47c7acbb3707a, type: 3}
+  - {fileID: 5537602928074422738, guid: dbd6a40657b81bc4ab70815b32c064ab, type: 3}
+  - {fileID: 3234177246766064207, guid: 4156a41c251169448b64d397066c8d84, type: 3}
+  - {fileID: 1447987709244396459, guid: 64aaa8c698778aa4798fa25e58dd80d1, type: 3}
+  - {fileID: 8140620975964691567, guid: 66d759fbcd8eae14dad067e1cdcf382b, type: 3}
 --- !u!114 &2058263188
 MonoBehaviour:
   m_ObjectHideFlags: 0
