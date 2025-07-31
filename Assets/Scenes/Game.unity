@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
+  m_FogMode: 2
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.47
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 3e56423e1fe71f94ea97f5bb2004a7e6, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.8103394, g: 0.8514762, b: 0.98432225, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 06cc0cb33fd8c0b4399a5793bc042b56,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -131,6 +132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 153028, guid: 1dce2846dc915b44ea1a12401fe517e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 174068, guid: 1dce2846dc915b44ea1a12401fe517e1, type: 3}
       propertyPath: m_Name
       value: Day and Night Controller
@@ -408,12 +413,17 @@ PrefabInstance:
     - target: {fileID: 1767586115017492304, guid: 312d0394fe4967749a5f74e679aaa882,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 11.200012
+      value: 11.199951
       objectReference: {fileID: 0}
     - target: {fileID: 1767586115017492304, guid: 312d0394fe4967749a5f74e679aaa882,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -13.599976
+      objectReference: {fileID: 0}
+    - target: {fileID: 2343751811335388028, guid: 312d0394fe4967749a5f74e679aaa882,
+        type: 3}
+      propertyPath: far clip plane
+      value: 30000
       objectReference: {fileID: 0}
     - target: {fileID: 2389711164676050911, guid: 312d0394fe4967749a5f74e679aaa882,
         type: 3}
@@ -1169,7 +1179,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Offset: 1819.1354
+  Offset: 7203.055
   FalloffDirection: 5
   FalloffRange: 1
   UseFalloffMap: 1
