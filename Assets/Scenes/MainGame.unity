@@ -1705,7 +1705,7 @@ MonoBehaviour:
   Scale: 2
   Lacunarity: 2
   Persistance: 0.111
-  Offset: 5555.3906
+  Offset: 7218.9775
   MinLevel: 20
   MaxLevel: 100
   MaxSteepness: 70
