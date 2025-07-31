@@ -12,15 +12,16 @@ public class SensetivitySettings : SliderSettings
     protected override void OnEnableVirtual()
     {
         _character = PlayerCharacter.Instance;
-        float sensetivity = PlayerPrefs.GetInt("Sensetivity", 1);
+        float sensetivity = PlayerPrefs.GetFloat("Sensetivity", 1);
         base.OnEnableVirtual();
         Slider.value = sensetivity;
     }
 
     protected override void OnSliderValueChanged(float value)
     {
-        _character.Controller.lookSpeed = value;
-        PlayerPrefs.SetInt("Sensetivity", (int) value);
+        if (_character != null)
+            _character.Controller.lookSpeed = value;
+        PlayerPrefs.SetFloat("Sensetivity", (int) value);
         _currentValueText.text = value.ToString();
     }
 }

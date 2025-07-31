@@ -14,7 +14,7 @@ namespace EvolveGames
 
         [SerializeField, Range(1, 10)] float walkingSpeed = 3.0f;
         [Range(0.1f, 5)] public float CroughSpeed = 1.0f;
-        [SerializeField, Range(2, 20)] float RuningSpeed = 4.0f;
+        [SerializeField, Range(2, 20)] public float RuningSpeed = 4.0f;
         [field: SerializeField] public float JumpSpeed { get;  set; } = 6.0f;
         [SerializeField, Range(0.5f, 10)] public float lookSpeed = 2.0f;
         [SerializeField, Range(10, 120)] float lookXLimit = 80.0f;
