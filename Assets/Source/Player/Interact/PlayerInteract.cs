@@ -25,11 +25,13 @@ public class PlayerInteract : MonoBehaviour
             if (_hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
             {
                 _currentInteractable = interactable;
+                interactable.InteractDetected();
                 InteractedDetected?.Invoke();
                 return;
             }
         }
 
+        _currentInteractable?.InteractLost();
         InteractedLost?.Invoke();
         _currentInteractable = null;
     }
