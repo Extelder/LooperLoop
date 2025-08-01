@@ -15,6 +15,8 @@ public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
+    private List<string> _triggers = new List<string>();
+
     public void Chase(int index)
     {
     }
@@ -35,8 +37,13 @@ public class EnemyAnimator : MonoBehaviour
     {
     }
 
-    public void SetRandomAnimatorBool(AnimatorRandomState animatorRandomState)
+    public void SetRandomAnimatorTrigger(AnimatorRandomState animatorRandomState)
     {
+        if (!_triggers.Contains(animatorRandomState.TriggerName))
+            _triggers.Add(animatorRandomState.TriggerName);
+
+        _triggers.ForEach(_ => { _animator.ResetTrigger(_); });
+
         _animator.SetInteger(animatorRandomState.IntName, animatorRandomState.Index);
         _animator.SetTrigger(animatorRandomState.TriggerName);
     }

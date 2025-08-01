@@ -5,14 +5,16 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
 
+[Serializable]
 public abstract class Attack
 {
+    [SerializeField] private int _damage;
+
     [SerializeField] private float _checkRate;
     [SerializeField] private OverlapSettings _checkPlayerOverlapSettings;
 
     [field: SerializeField] public AnimatorRandomState AttackState { get; private set; }
-
-    [SerializeField] private float _speed;
+    [field: SerializeField] public AnimatorRandomState AttackStopState { get; private set; }
 
     protected EnemyAnimator Animator { get; private set; }
     protected Transform Player { get; private set; }
@@ -31,6 +33,7 @@ public abstract class Attack
         while (true)
         {
             yield return new WaitForSeconds(_checkRate);
+            Debug.LogError("Checking");
             Collider[] others = new Collider[_checkPlayerOverlapSettings.MaxOverlapColliders];
             Physics.OverlapSphereNonAlloc(_checkPlayerOverlapSettings.Point.position, _checkPlayerOverlapSettings.Range,
                 others,
@@ -39,7 +42,7 @@ public abstract class Attack
             {
                 if (others[i] == null)
                     continue;
-                if (others[i].TryGetComponent<PlayerHealth>(out PlayerHealth PlayerHealth))
+                if (others[i].TryGetComponent<PlayerHitBox>(out PlayerHitBox PlayerHitBox))
                 {
                     StartAttackAnim();
                     break;
@@ -48,15 +51,41 @@ public abstract class Attack
         }
     }
 
+    public void StopAttack()
+    {
+        Animator.SetRandomAnimatorTrigger(AttackStopState);
+    }
+
     public virtual void PerformAttack()
     {
-        
+        Collider[] others = new Collider[_checkPlayerOverlapSettings.MaxOverlapColliders];
+        Physics.OverlapSphereNonAlloc(_checkPlayerOverlapSettings.Point.position, _checkPlayerOverlapSettings.Range,
+            others,
+            _checkPlayerOverlapSettings.LayerMask);
+        for (int i = 0; i < others.Length; i++)
+        {
+            if (others[i] == null)
+                continue;
+            if (others[i].TryGetComponent<PlayerHitBox>(out PlayerHitBox PlayerHitBox))
+            {
+                PlayerHitBox.Hit(_damage);
+                break;
+            }
+        }
     }
-    
+
     public virtual void StartAttackAnim()
     {
-        Animator.SetRandomAnimatorBool(AttackState);
+        Animator.SetRandomAnimatorTrigger(AttackState);
     }
+}
+
+public class HeavyAttack : Attack
+{
+}
+
+public class LightAttack : Attack
+{
 }
 
 [Serializable]
@@ -67,7 +96,7 @@ public class EnemyAttack
     [SerializeReference] [SerializeReferenceButton]
     private Attack[] _attacks;
 
-    private Attack _currentAttack;
+    public Attack CurrentAttack { get; private set; }
 
     private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -77,15 +106,25 @@ public class EnemyAttack
 
         Debug.LogError(random);
 
-        _currentAttack = _attacks[random];
-        _currentAttack.Activate(_animator, _disposable);
+        CurrentAttack = _attacks[random];
+        CurrentAttack.Activate(_animator, _disposable);
     }
 
     public void AttackAnimationFrame()
     {
-        _currentAttack
+        CurrentAttack.PerformAttack();
     }
-    
+
+    public void PerformAttack()
+    {
+        CurrentAttack.PerformAttack();
+    }
+
+    public void StopAttack()
+    {
+        CurrentAttack.StopAttack();
+    }
+
     ~EnemyAttack()
     {
         _disposable?.Clear();

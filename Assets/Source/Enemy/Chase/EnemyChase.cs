@@ -17,14 +17,13 @@ public abstract class Chase
     protected EnemyAnimator Animator { get; private set; }
     protected Transform Player { get; private set; }
 
-    private CompositeDisposable _disposable;
+    protected CompositeDisposable _disposable = new CompositeDisposable();
 
-    public virtual void Activate(NavMeshAgent agent, EnemyAnimator animator, CompositeDisposable disposable)
+    public virtual void Activate(NavMeshAgent agent, EnemyAnimator animator)
     {
         Agent = agent;
         Animator = animator;
         Player = PlayerCharacter.Instance.Controller.transform;
-        _disposable = disposable;
         Agent.speed = _speed;
     }
 
@@ -35,21 +34,32 @@ public abstract class Chase
     {
         Observable.EveryUpdate().Subscribe(_ => { Agent.SetDestination(Player.position); }).AddTo(_disposable);
     }
+
+    ~Chase()
+    {
+        _disposable?.Clear();
+    }
 }
 
 [Serializable]
 public class BaseChase : Chase
 {
+    [SerializeField] private AnimatorRandomState _chaseEndState;
+    
     public override void StartChase()
     {
+        Debug.LogError("Stop");
         Agent.isStopped = false;
         DestinationToPlayer();
-        Animator.SetRandomAnimatorBool(ChaseState);
+        Animator.SetRandomAnimatorTrigger(ChaseState);
     }
 
     public override void StopChase()
     {
+        Debug.LogError("Start");
+        _disposable?.Clear();
         Agent.isStopped = true;
+        Animator.SetRandomAnimatorTrigger(_chaseEndState);
     }
 }
 
@@ -58,9 +68,8 @@ public class FlyChase : Chase
 {
     public override void StartChase()
     {
-        Agent.isStopped = false;
         DestinationToPlayer();
-        Animator.SetRandomAnimatorBool(ChaseState);
+        Animator.SetRandomAnimatorTrigger(ChaseState);
     }
 
     public override void StopChase()
@@ -89,7 +98,7 @@ public class EnemyChase
         Debug.LogError(random);
 
         _currentChase = _chases[random];
-        _currentChase.Activate(_agent, _animator, _disposable);
+        _currentChase.Activate(_agent, _animator);
     }
 
     public void StartChase()
@@ -97,8 +106,8 @@ public class EnemyChase
         _currentChase.StartChase();
     }
 
-    ~EnemyChase()
+    public void StopChase()
     {
-        _disposable?.Clear();
+        _currentChase.StopChase();
     }
 }

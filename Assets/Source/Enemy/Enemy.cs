@@ -10,10 +10,32 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyChase _enemyChase;
+    [Space(20)] [SerializeField] private EnemyAttack _enemyAttack;
+    [Space(20)] [SerializeField] private EnemyUltimate _enemyUltimate;
 
     private void Start()
     {
         _enemyChase.Init();
+        _enemyAttack.Init();
+        _enemyUltimate.Init();
+
+        _enemyChase.StartChase();
+        StartCoroutine(_enemyAttack.CurrentAttack.StartChecking());
+    }
+
+    public void AttackStarted()
+    {
+        _enemyChase.StopChase();
+    }
+
+    public void PerformAttack()
+    {
+        _enemyAttack.PerformAttack();
+    }
+
+    public void AttackEnded()
+    {
+        _enemyAttack.StopAttack();
         _enemyChase.StartChase();
     }
 

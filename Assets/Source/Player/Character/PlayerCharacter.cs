@@ -25,6 +25,7 @@ public abstract class PlayerCharacteristic<T> : PlayerCharacteristicBase where T
     [field: SerializeField] public override int MaxValue { get; set; }
     [field: SerializeField] public override int CurrentValue { get; set; }
 
+    
     public override event Action<int> ValueChanged;
 
 
@@ -92,6 +93,7 @@ public abstract class PlayerCharacteristic<T> : PlayerCharacteristicBase where T
 
 public class PlayerCharacter : MonoBehaviour
 {
+    [field: SerializeField] public Transform LaserPoint { get; private set; }
     [field: SerializeField] public PlayerController Controller { get; private set; }
 
     public static PlayerCharacter Instance { get; private set; }
