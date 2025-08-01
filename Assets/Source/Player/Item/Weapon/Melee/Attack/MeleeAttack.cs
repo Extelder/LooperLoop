@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public struct OverlapSettings
@@ -36,6 +37,7 @@ public class MeleeAttack : MonoBehaviour
 
     public event Action Attacked;
     public event Action Hitted;
+    public event Action<RaycastHit, HitBox> RaycastHitted;
 
     private void Update()
     {
@@ -50,6 +52,7 @@ public class MeleeAttack : MonoBehaviour
 
     public void PerformAttack()
     {
+        int damage = damageCharacteristic.CurrentValue;
         Attacked?.Invoke();
         Collider[] others = new Collider[_overlapSettings.MaxOverlapColliders];
 
@@ -62,9 +65,13 @@ public class MeleeAttack : MonoBehaviour
                 continue;
             if (others[i].TryGetComponent<HitBox>(out HitBox HitBox))
             {
-                if (IsHitBoxBlocked(HitBox))
+                if (IsHitBoxBlocked(HitBox) || IsHitBlockedFromCamera(HitBox))
                 {
-                    HitBox.Hit(damageCharacteristic.CurrentValue);
+                    if (Random.value <= (float)MeleeCriticalAttackCharacteristics.Instance.CurrentValue / 100)
+                    {
+                        damage *= MeleeCriticalAttackCharacteristics.Instance.DamageMultiplier;
+                    }
+                    HitBox.Hit(damage);
                     Hitted?.Invoke();
                 }
             }
@@ -78,7 +85,26 @@ public class MeleeAttack : MonoBehaviour
             out RaycastHit hit, _raycastSettings.Range, _raycastSettings.LayerMask))
         {
             if (hit.collider.TryGetComponent<HitBox>(out HitBox HitBox) && hitBox == HitBox)
+            {
+                RaycastHitted?.Invoke(hit, HitBox);
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsHitBlockedFromCamera(HitBox hitBox)
+    {
+        if (Physics.Raycast(_raycastSettings.origin.position,
+            _raycastSettings.origin.forward,
+            out RaycastHit hit, _raycastSettings.Range, _raycastSettings.LayerMask))
+        {
+            if (hit.collider.TryGetComponent<HitBox>(out HitBox HitBox) && hitBox == HitBox)
+            {
+                RaycastHitted?.Invoke(hit, HitBox);
+                return true;
+            }
         }
 
         return false;

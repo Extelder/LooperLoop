@@ -83,7 +83,6 @@ public class EnemyAttack
 
     public void AttackAnimationFrame()
     {
-        _currentAttack
     }
     
     ~EnemyAttack()
