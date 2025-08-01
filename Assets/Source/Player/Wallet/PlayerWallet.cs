@@ -15,6 +15,7 @@ public class PlayerWallet : MonoBehaviour
     public static PlayerWallet Instance { get; private set; }
 
     public event Action<int> ValueChanged;
+    public event Action<int> MoneyChanged;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class PlayerWallet : MonoBehaviour
         }
 
         CurrentValue -= value;
+        MoneyChanged?.Invoke(-value);
         ValueChanged?.Invoke(CurrentValue);
         return true;
     }
@@ -54,6 +56,7 @@ public class PlayerWallet : MonoBehaviour
         }
 
         CurrentValue += value;
+        MoneyChanged?.Invoke(value);
         ValueChanged?.Invoke(CurrentValue);
     }
 }

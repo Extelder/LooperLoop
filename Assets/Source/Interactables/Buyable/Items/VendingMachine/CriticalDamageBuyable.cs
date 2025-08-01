@@ -6,6 +6,6 @@ public class CriticalDamageBuyable : VendingMachineBuyable
 {
     public override void OnBought()
     {
-        
+        MeleeCriticalAttackCharacteristics.Instance.AddValue(Item.AddibleValue);
     }
 }
