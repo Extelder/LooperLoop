@@ -11,6 +11,22 @@ public class MeleeSettings : MonoBehaviour
 
     public event Action<MeleeItem> ItemChanged;
 
+    private void OnEnable()
+    {
+        MeleeItemInteractable.ItemPickued += OnItemPickuped;
+    }
+
+    private void OnItemPickuped(MeleeItem item)
+    {
+        ChangeItem(item);
+    }
+
+    private void OnDisable()
+    {
+        MeleeItemInteractable.ItemPickued += OnItemPickuped;
+    }
+
+
     private void Start()
     {
         ChangeItem(_startItem);

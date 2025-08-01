@@ -10,9 +10,12 @@ public class MeleeItemInteractable : MonoBehaviour, IInteractable
     public event Action Detected;
     public event Action Lost;
 
+    public static event Action<MeleeItem> ItemPickued;
 
     public void Interact()
     {
+        ItemPickued?.Invoke(Item);
+        Destroy(gameObject);
     }
 
     public void InteractDetected()
