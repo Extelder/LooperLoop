@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -31,7 +32,17 @@ public class LaserUltimate : Ultimate
     [SerializeField] private int _rate;
     [SerializeField] private int _duration;
 
+    [SerializeField] private int _damageRate;
+    [SerializeField] private int _damage;
+
     private CompositeDisposable _disposable = new CompositeDisposable();
+
+    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
+    private CancellationTokenSource[] _damagingCancellationTokenSources = new CancellationTokenSource[]
+        {new CancellationTokenSource(), new CancellationTokenSource()};
+
+    private bool[] _damaging = new[] {false, false};
 
     public override void Activate(Transform player)
     {
@@ -48,13 +59,18 @@ public class LaserUltimate : Ultimate
                 _lineRenderers[i].gameObject.SetActive(false);
             }
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_rate));
+            await UniTask.Delay(TimeSpan.FromSeconds(_rate), cancellationToken: _cancellationTokenSource.Token);
 
             PerformUltimate();
-            await UniTask.Delay(TimeSpan.FromSeconds(_duration));
+            await UniTask.Delay(TimeSpan.FromSeconds(_duration), cancellationToken: _cancellationTokenSource.Token);
             _disposable.Clear();
+            for (int i = 0; i < _damaging.Length; i++)
+            {
+                StopDamaging(i);
+            }
         }
     }
+
 
     public override void PerformUltimate()
     {
@@ -73,15 +89,56 @@ public class LaserUltimate : Ultimate
                 if (Physics.Raycast(_eyesRaycastSettingses[i].origin.position, Player.position - _eyes[i].position,
                     out hit, _eyesRaycastSettingses[i].Range, _eyesRaycastSettingses[i].LayerMask))
                 {
-                    _lineRenderers[i].SetPosition(1, hit.point);
+                    if (hit.collider.TryGetComponent<PlayerHitBox>(out PlayerHitBox PlayerHitBox))
+                    {
+                        _lineRenderers[i].SetPosition(1, PlayerHitBox.transform.position);
+                        if (!_damaging[i])
+                        {
+                            _damaging[i] = true;
+                            Damaging(PlayerHitBox, i);
+                        }
+                    }
+                    else
+                    {
+                        StopDamaging(i);
+                        _lineRenderers[i].SetPosition(1, hit.point);
+                    }
                 }
             }
         }).AddTo(_disposable);
-        Debug.LogError("ULTIMATE");
+    }
+
+    public void StopDamaging(int index)
+    {
+        Debug.LogError("Stopped");
+        _damaging[index] = false;
+        _damagingCancellationTokenSources[index]?.Cancel();
+    }
+
+    public async void Damaging(PlayerHitBox hitBox, int damagingBoolIndex)
+    {
+        for (int i = 0; i < _damagingCancellationTokenSources.Length; i++)
+        {
+            _damagingCancellationTokenSources[i] = new CancellationTokenSource();
+        }
+
+        while (_damaging[damagingBoolIndex])
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_damageRate),
+                cancellationToken: _damagingCancellationTokenSources[damagingBoolIndex].Token);
+            hitBox.Hit(_damage);
+        }
     }
 
     ~LaserUltimate()
     {
+        for (int i = 0; i < _damagingCancellationTokenSources.Length; i++)
+        {
+            _damaging[i] = false;
+            _damagingCancellationTokenSources[i].Cancel();
+        }
+
+        _cancellationTokenSource?.Cancel();
         _disposable?.Clear();
     }
 }

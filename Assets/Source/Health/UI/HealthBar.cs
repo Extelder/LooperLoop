@@ -29,7 +29,6 @@ public class HealthBar : MonoBehaviour
         _disposable?.Clear();
         float percent = (float) _health.MaxValue / 100;
         _healtBar.fillAmount = value / percent / 100;
-        Debug.Log(value / percent / 100);
         Observable.EveryUpdate().Subscribe(_ =>
         {
             _healthBarBG.fillAmount = Mathf.Lerp(_healthBarBG.fillAmount, _healtBar.fillAmount, _speed);
