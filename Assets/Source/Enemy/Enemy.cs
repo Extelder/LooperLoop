@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyChase.Init();
+        _enemyChase.StartChase();
     }
 
     public event Action ChasingEnd;

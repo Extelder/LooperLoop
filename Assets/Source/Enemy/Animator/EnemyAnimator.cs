@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public struct AnimatorRandomState
 {
     [field: SerializeField] public int Index { get; private set; }
-    [field: SerializeField] public int IntName { get; private set; }
+    [field: SerializeField] public string IntName { get; private set; }
     [field: SerializeField] public string TriggerName { get; private set; }
 }
 
@@ -35,13 +37,7 @@ public class EnemyAnimator : MonoBehaviour
 
     public void SetRandomAnimatorBool(AnimatorRandomState animatorRandomState)
     {
-        _animator.SetTrigger(animatorRandomState.TriggerName);
         _animator.SetInteger(animatorRandomState.IntName, animatorRandomState.Index);
-    }
-
-    public void SetRandomAnimatorBoolAndDisableOthers(AnimatorRandomState animatorRandomState)
-    {
         _animator.SetTrigger(animatorRandomState.TriggerName);
-        _animator.SetInteger(animatorRandomState.IntName, animatorRandomState.Index);
     }
 }

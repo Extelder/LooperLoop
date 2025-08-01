@@ -11,6 +11,8 @@ public abstract class Chase
 {
     [field: SerializeField] public AnimatorRandomState ChaseState { get; private set; }
 
+    [SerializeField] private float _speed;
+
     protected NavMeshAgent Agent { get; private set; }
     protected EnemyAnimator Animator { get; private set; }
     protected Transform Player { get; private set; }
@@ -23,6 +25,7 @@ public abstract class Chase
         Animator = animator;
         Player = PlayerCharacter.Instance.Controller.transform;
         _disposable = disposable;
+        Agent.speed = _speed;
     }
 
     public abstract void StartChase();
@@ -40,7 +43,7 @@ public class BaseChase : Chase
     public override void StartChase()
     {
         Agent.isStopped = false;
-        Agent.SetDestination(Player.position);
+        DestinationToPlayer();
         Animator.SetRandomAnimatorBool(ChaseState);
     }
 
@@ -56,7 +59,7 @@ public class FlyChase : Chase
     public override void StartChase()
     {
         Agent.isStopped = false;
-        Agent.SetDestination(Player.position);
+        DestinationToPlayer();
         Animator.SetRandomAnimatorBool(ChaseState);
     }
 
@@ -82,13 +85,20 @@ public class EnemyChase
     public void Init()
     {
         int random = UnityEngine.Random.Range(0, _chases.Length);
+
+        Debug.LogError(random);
+
         _currentChase = _chases[random];
         _currentChase.Activate(_agent, _animator, _disposable);
     }
 
+    public void StartChase()
+    {
+        _currentChase.StartChase();
+    }
+
     ~EnemyChase()
     {
-        Debug.LogError("Destructor");
         _disposable?.Clear();
     }
 }

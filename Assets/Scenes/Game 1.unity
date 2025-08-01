@@ -970,6 +970,7 @@ GameObject:
   - component: {fileID: 445562501}
   - component: {fileID: 445562502}
   - component: {fileID: 445562503}
+  - component: {fileID: 445562504}
   m_Layer: 0
   m_Name: Bo55
   m_TagString: Untagged
@@ -984,7 +985,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445562499}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
   m_LocalPosition: {x: 0, y: 0.146, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -992,7 +993,7 @@ Transform:
   - {fileID: 543450652881626797}
   m_Father: {fileID: 306286597}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!195 &445562501
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1004,9 +1005,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.78
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 1000
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 1000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1031,12 +1032,27 @@ MonoBehaviour:
     _agent: {fileID: 445562501}
     _animator: {fileID: 445562503}
     _chases:
-    - rid: 3970161701073715201
+    - rid: 3970161701073715204
+    - rid: 3970161701073715206
   references:
     version: 2
     RefIds:
-    - rid: 3970161701073715201
+    - rid: 3970161701073715204
       type: {class: FlyChase, ns: , asm: Assembly-CSharp}
+      data:
+        <ChaseState>k__BackingField:
+          <Index>k__BackingField: 0
+          <IntName>k__BackingField: ChaseVariant
+          <TriggerName>k__BackingField: Chase
+        _speed: 8
+    - rid: 3970161701073715206
+      type: {class: BaseChase, ns: , asm: Assembly-CSharp}
+      data:
+        <ChaseState>k__BackingField:
+          <Index>k__BackingField: 1
+          <IntName>k__BackingField: ChaseVariant
+          <TriggerName>k__BackingField: Chase
+        _speed: 3.5
 --- !u!114 &445562503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,7 +1065,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19b0f858bfbf6e479da915fcda8a103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
+  _animator: {fileID: 919132148941126680}
+--- !u!136 &445562504
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445562499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 4.2745047
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.1278286, z: 0}
 --- !u!1 &564406607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2541133098280588386, guid: 312d0394fe4967749a5f74e679aaa882,
@@ -1087,7 +1126,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779589024}
-  m_LocalRotation: {x: 0.112059936, y: -0.14298879, z: 0.0062326975, w: 0.9833402}
+  m_LocalRotation: {x: 0.11000276, y: -0.2820545, z: 0.05020626, w: 0.9517479}
   m_LocalPosition: {x: 0.3287106, y: 0.97100025, z: 0.47698447}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1743,7 +1782,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148941126679}
-  m_LocalRotation: {x: -0, y: 0.9914449, z: -0, w: 0.13052654}
+  m_LocalRotation: {x: -0, y: -0.000000849366, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.69948, y: 0.69948, z: 0.69948}
   m_ConstrainProportionsScale: 0
@@ -1752,7 +1791,7 @@ Transform:
   - {fileID: 5465940247340172857}
   m_Father: {fileID: 445562500}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 165, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &608321762293802810
 Transform:
   m_ObjectHideFlags: 0
