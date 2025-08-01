@@ -32,7 +32,7 @@ public class HealthBar : MonoBehaviour
         Debug.Log(value / percent / 100);
         Observable.EveryUpdate().Subscribe(_ =>
         {
-            _healthBarBG.fillAmount = Mathf.Lerp(_healthBarBG.fillAmount, _healtBar.fillAmount, _speed);
+            _healthBarBG.fillAmount = Mathf.Lerp(_healthBarBG.fillAmount, _healtBar.fillAmount - 0.05f, _speed);
             if (Mathf.Abs(_healthBarBG.fillAmount - _healtBar.fillAmount) <= 0.001)
             {
                 _disposable.Clear();
