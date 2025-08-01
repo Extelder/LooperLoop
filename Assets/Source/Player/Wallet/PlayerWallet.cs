@@ -29,7 +29,7 @@ public class PlayerWallet : MonoBehaviour
 
     private void Start()
     {
-        Add(_minValue);
+        Add(_startValue);
     }
 
     public bool TrySpent(int value)

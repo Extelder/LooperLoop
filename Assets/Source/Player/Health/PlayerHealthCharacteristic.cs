@@ -18,4 +18,9 @@ public class PlayerHealthCharacteristic : PlayerCharacteristic<PlayerHealthChara
         _health.HealToMax();
         OnValueChanged(CurrentValue);
     }
+
+    public void Heal(int value)
+    {
+        _health.Heal(value);
+    }
 }
