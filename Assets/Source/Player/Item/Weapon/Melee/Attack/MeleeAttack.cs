@@ -24,7 +24,7 @@ public struct RaycastSettings
 public class MeleeAttack : MonoBehaviour
 {
     [SerializeField] private MeleeDamageCharacteristic damageCharacteristic;
-    
+
     [SerializeField] private OverlapSettings _overlapSettings;
     [SerializeField] private RaycastSettings _raycastSettings;
 
@@ -33,6 +33,9 @@ public class MeleeAttack : MonoBehaviour
     private CompositeDisposable _disposable = new CompositeDisposable();
 
     private bool _attacking;
+
+    public event Action Attacked;
+    public event Action Hitted;
 
     private void Update()
     {
@@ -47,6 +50,7 @@ public class MeleeAttack : MonoBehaviour
 
     public void PerformAttack()
     {
+        Attacked?.Invoke();
         Collider[] others = new Collider[_overlapSettings.MaxOverlapColliders];
 
         Physics.OverlapSphereNonAlloc(_overlapSettings.Point.position, _overlapSettings.Range, others,
@@ -61,6 +65,7 @@ public class MeleeAttack : MonoBehaviour
                 if (IsHitBoxBlocked(HitBox))
                 {
                     HitBox.Hit(damageCharacteristic.CurrentValue);
+                    Hitted?.Invoke();
                 }
             }
         }

@@ -26,7 +26,6 @@ public class MeleeSettings : MonoBehaviour
         MeleeItemInteractable.ItemPickued += OnItemPickuped;
     }
 
-
     private void Start()
     {
         ChangeItem(_startItem);

@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86727df4afc86664ca06575e15dfa552, type: 3}
-  m_Name: Guts
+  m_Script: {fileID: 11500000, guid: 955f6c9be248dc249a31bad716cc6963, type: 3}
+  m_Name: Electrocute
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 1
-  <Damage>k__BackingField: 10
-  <Speed>k__BackingField: 3
+  shakeType: 1
+  strength: 0.05
+  roughness: 20
+  fadeIn: 0
+  fadeOut: 0
+  positionInfluence: {x: 0, y: 0, z: 0}
+  rotationInfluence: {x: 0, y: 40, z: 40}
