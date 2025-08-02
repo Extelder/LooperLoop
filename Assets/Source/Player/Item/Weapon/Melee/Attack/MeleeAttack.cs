@@ -41,6 +41,9 @@ public class MeleeAttack : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Mouse0))
+            _animator.AttackAnimation();
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
             _animator.AttackAnimation();
     }
@@ -67,10 +70,11 @@ public class MeleeAttack : MonoBehaviour
             {
                 if (IsHitBoxBlocked(HitBox) || IsHitBlockedFromCamera(HitBox))
                 {
-                    if (Random.value <= (float)MeleeCriticalAttackCharacteristics.Instance.CurrentValue / 100)
+                    if (Random.value <= (float) MeleeCriticalAttackCharacteristics.Instance.CurrentValue / 100)
                     {
                         damage *= MeleeCriticalAttackCharacteristics.Instance.DamageMultiplier;
                     }
+
                     HitBox.Hit(damage);
                     Hitted?.Invoke();
                 }

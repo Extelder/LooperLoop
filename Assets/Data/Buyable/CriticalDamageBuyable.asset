@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CriticalDamageBuyable
   m_EditorClassIdentifier: 
   <Price>k__BackingField: 50
-  <AddibleValue>k__BackingField: 5
+  <AddibleValue>k__BackingField: 3

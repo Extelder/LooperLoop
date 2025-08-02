@@ -16,7 +16,7 @@ public class TerrainTextureHeightGenerator : MonoBehaviour
             
             private TerrainData _terrainData;
 
-            void Start()
+            public void Generate()
             {
                 if (_terrain == null)
                 {

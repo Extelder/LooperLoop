@@ -12,23 +12,23 @@ public class GrassTerrainGenerator : MonoBehaviour
 
     private List<DetailPrototype> _prototypes;
     private DetailPrototype _grassPrototype;
-    
-    private void Start()
+
+    public void Generate()
     {
         DetailPrototype grassPrototype = new DetailPrototype();
         grassPrototype.prototypeTexture = _grassTexture;
-        grassPrototype.minWidth = 0.5f; 
-        grassPrototype.maxWidth = 1.0f; 
-        grassPrototype.minHeight = 0.5f; 
-        grassPrototype.maxHeight = 1.0f; 
+        grassPrototype.minWidth = 0.5f;
+        grassPrototype.maxWidth = 1.0f;
+        grassPrototype.minHeight = 0.5f;
+        grassPrototype.maxHeight = 1.0f;
         grassPrototype.renderMode = DetailRenderMode.Grass;
         grassPrototype.dryColor = _color;
         grassPrototype.healthyColor = _color;
         TerrainData terrainData = _terrain.terrainData;
         _prototypes = new List<DetailPrototype>(terrainData.detailPrototypes);
-        _prototypes.Add(grassPrototype); 
+        _prototypes.Add(grassPrototype);
         terrainData.detailPrototypes = _prototypes.ToArray();
-        int detailResolution = 2048; 
+        int detailResolution = 2048;
         terrainData.SetDetailResolution(detailResolution, 8);
         int[,] detailMap = new int[detailResolution, detailResolution];
         for (int y = 0; y < detailResolution; y++)
@@ -38,6 +38,7 @@ public class GrassTerrainGenerator : MonoBehaviour
                 detailMap[x, y] = 1;
             }
         }
+
         terrainData.SetDetailLayer(0, 0, 0, detailMap);
     }
 

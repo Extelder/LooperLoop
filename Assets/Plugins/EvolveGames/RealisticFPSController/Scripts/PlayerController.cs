@@ -1,5 +1,6 @@
 ﻿//by EvolveGames
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -65,6 +66,8 @@ namespace EvolveGames
         bool WallDistance;
         [HideInInspector] public float WalkingValue;
 
+        public event Action Jumped;
+
         void Start()
         {
             characterController = GetComponent<CharacterController>();
@@ -99,6 +102,7 @@ namespace EvolveGames
 
             if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isClimbing)
             {
+                Jumped?.Invoke();
                 moveDirection.y = JumpSpeed;
             }
             else

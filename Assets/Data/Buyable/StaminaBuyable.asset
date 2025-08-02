@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: StaminaBuyable
   m_EditorClassIdentifier: 
   <Price>k__BackingField: 10
-  <AddibleValue>k__BackingField: 1
+  <AddibleValue>k__BackingField: 5

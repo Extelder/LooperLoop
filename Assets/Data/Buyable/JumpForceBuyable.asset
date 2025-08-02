@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: JumpForceBuyable
   m_EditorClassIdentifier: 
   <Price>k__BackingField: 10
-  <AddibleValue>k__BackingField: 1
+  <AddibleValue>k__BackingField: 3

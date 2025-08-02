@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: HealBuyable
   m_EditorClassIdentifier: 
   <Price>k__BackingField: 10
-  <AddibleValue>k__BackingField: 100
+  <AddibleValue>k__BackingField: 30
