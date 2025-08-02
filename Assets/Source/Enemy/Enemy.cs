@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     public event Action<Attack> AttackBootstrapped;
     public event Action<Ultimate> UltimateBootstrapped;
 
-    private bool _active;
+    private bool _active = true;
 
     private void Start()
     {
@@ -40,9 +40,9 @@ public class Enemy : MonoBehaviour
     public void Kill()
     {
         _active = false;
-        _enemyChase = new EnemyChase();
-        _enemyAttack = new EnemyAttack();
-        _enemyChase = new EnemyChase();
+        _enemyChase.Kill();
+        _enemyAttack.Kill();
+        _enemyUltimate.Kill();
     }
 
     public void AttackStarted()
@@ -61,7 +61,6 @@ public class Enemy : MonoBehaviour
     {
         if (!_active)
             return;
-        _enemyAttack.StopAttack();
         _enemyChase.StartChase();
     }
 

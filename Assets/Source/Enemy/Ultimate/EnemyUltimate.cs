@@ -20,6 +20,8 @@ public abstract class Ultimate
     }
 
     public abstract void PerformUltimate();
+
+    public abstract void OnKilled();
 }
 
 [Serializable]
@@ -115,16 +117,20 @@ public class LaserUltimate : Ultimate
         }).AddTo(_secondDisposable);
     }
 
+    public override void OnKilled()
+    {
+        for (int i = 0; i < _eyes.Length; i++)
+        {
+            _lineRenderers[i].gameObject.SetActive(false);
+        }
+        _cancellationTokenSource?.Cancel();
+        _firstDisposable?.Clear();
+        _secondDisposable?.Clear();
+    }
+
     public void Damaging(PlayerHitBox hitBox)
     {
         hitBox.Hit(_damage);
-    }
-
-    ~LaserUltimate()
-    {
-        _cancellationTokenSource?.Cancel();
-        _firstDisposable?.Clear();
-        _secondDisposable.Clear();
     }
 }
 
@@ -143,8 +149,8 @@ public class EnemyUltimate
         CurrentUltimate.Activate(PlayerCharacter.Instance.LaserPoint);
     }
 
-    ~EnemyUltimate()
+    public void Kill()
     {
-        CurrentUltimate = null;
+        CurrentUltimate.OnKilled();
     }
 }
