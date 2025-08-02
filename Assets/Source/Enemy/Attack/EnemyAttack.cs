@@ -10,14 +10,12 @@ public abstract class Attack
 {
     [field: SerializeField] public Material Material { get; private set; }
 
-    [SerializeField] private int _damage;
+    [field:SerializeField] protected int Damage { get; private set; }
 
-    [SerializeField] private float _checkRate;
+    [field:SerializeField] protected float CheckRate{ get; private set; }
     [SerializeField] private OverlapSettings _checkPlayerOverlapSettings;
 
     [field: SerializeField] public AnimatorRandomState AttackState { get; private set; }
-    [field: SerializeField] public AnimatorRandomState AttackStopState { get; private set; }
-
     protected EnemyAnimator Animator { get; private set; }
     protected Transform Player { get; private set; }
 
@@ -30,12 +28,11 @@ public abstract class Attack
         _disposable = disposable;
     }
 
-    public IEnumerator StartChecking()
+    public virtual IEnumerator StartChecking()
     {
         while (true)
         {
-            yield return new WaitForSeconds(_checkRate);
-            Debug.LogError("Checking");
+            yield return new WaitForSeconds(CheckRate);
             Collider[] others = new Collider[_checkPlayerOverlapSettings.MaxOverlapColliders];
             Physics.OverlapSphereNonAlloc(_checkPlayerOverlapSettings.Point.position, _checkPlayerOverlapSettings.Range,
                 others,
@@ -53,11 +50,6 @@ public abstract class Attack
         }
     }
 
-    public void StopAttack()
-    {
-        Animator.SetRandomAnimatorTrigger(AttackStopState);
-    }
-
     public virtual void PerformAttack()
     {
         Collider[] others = new Collider[_checkPlayerOverlapSettings.MaxOverlapColliders];
@@ -70,25 +62,71 @@ public abstract class Attack
                 continue;
             if (others[i].TryGetComponent<PlayerHitBox>(out PlayerHitBox PlayerHitBox))
             {
-                PlayerHitBox.Hit(_damage);
+                PlayerHitBox.Hit(Damage);
                 break;
             }
         }
     }
-
+    
     public virtual void StartAttackAnim()
     {
         Animator.SetRandomAnimatorTrigger(AttackState);
     }
 }
 
+[Serializable]
 public class HeavyAttack : Attack
 {
 }
 
+[Serializable]
 public class LightAttack : Attack
 {
 }
+
+[Serializable]
+public class MediumAttack : Attack
+{
+}
+
+[Serializable]
+public class ShootAttack : Attack
+{
+    [SerializeField] private Transform _enemy;
+    [SerializeField] private float _range;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private Pool _trailPool;
+    
+    public override IEnumerator StartChecking()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(CheckRate);
+            if (Physics.Raycast(_enemy.position, Player.position - _enemy.position,
+                out RaycastHit hit, _range, _layerMask))
+            {
+                if (hit.collider.TryGetComponent<PlayerHitBox>(out PlayerHitBox playerHitBox))
+                {
+                    StartAttackAnim();
+                }
+            }
+        }
+    }
+    
+    public override void PerformAttack()
+    {
+        if (Physics.Raycast(_enemy.position, Player.position - _enemy.position,
+            out RaycastHit hit, _range, _layerMask))
+        {
+            if (hit.collider.TryGetComponent<PlayerHitBox>(out PlayerHitBox playerHitBox))
+            {
+                _trailPool.GetFreeElement(_attackPoint.position);
+            }
+        }
+    }
+}
+
 
 [Serializable]
 public class EnemyAttack
@@ -112,6 +150,12 @@ public class EnemyAttack
         CurrentAttack.Activate(_animator, _disposable);
     }
 
+    public void Kill()
+    {
+        CurrentAttack = null;
+        _disposable?.Clear();
+    }
+
     public void AttackAnimationFrame()
     {
         CurrentAttack.PerformAttack();
@@ -120,16 +164,5 @@ public class EnemyAttack
     public void PerformAttack()
     {
         CurrentAttack.PerformAttack();
-    }
-
-    public void StopAttack()
-    {
-        CurrentAttack.StopAttack();
-    }
-
-    ~EnemyAttack()
-    {
-        CurrentAttack = null;
-        _disposable?.Clear();
     }
 }

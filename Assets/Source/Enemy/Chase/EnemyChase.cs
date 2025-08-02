@@ -49,7 +49,6 @@ public class BaseChase : Chase
 
     public override void StartChase()
     {
-        Debug.LogError("Stop");
         Agent.isStopped = false;
         DestinationToPlayer();
         Animator.SetRandomAnimatorTrigger(ChaseState);
@@ -57,7 +56,6 @@ public class BaseChase : Chase
 
     public override void StopChase()
     {
-        Debug.LogError("Start");
         _disposable?.Clear();
         Agent.isStopped = true;
         Animator.SetRandomAnimatorTrigger(_chaseEndState);
@@ -66,6 +64,34 @@ public class BaseChase : Chase
 
 [Serializable]
 public class FlyChase : Chase
+{
+    public override void StartChase()
+    {
+        DestinationToPlayer();
+        Animator.SetRandomAnimatorTrigger(ChaseState);
+    }
+
+    public override void StopChase()
+    {
+    }
+}
+
+[Serializable]
+public class TrapChase : Chase
+{
+    public override void StartChase()
+    {
+        DestinationToPlayer();
+        Animator.SetRandomAnimatorTrigger(ChaseState);
+    }
+
+    public override void StopChase()
+    {
+    }
+}
+
+[Serializable]
+public class NarutoChase : Chase
 {
     public override void StartChase()
     {
@@ -102,10 +128,10 @@ public class EnemyChase
         CurrentChase.Activate(_agent, _animator);
     }
 
-    ~EnemyChase()
+    public void Kill()
     {
         _disposable.Clear();
-        CurrentChase.StopChase();
+        _agent.isStopped = true;
         CurrentChase = null;
     }
 

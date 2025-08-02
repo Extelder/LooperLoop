@@ -45,6 +45,17 @@ public class AnimateDeath : Death
 }
 
 [Serializable]
+public class BrutalDeath: Death
+{
+    public override void PerformDeath()
+    {
+        Enemy.Kill();
+        Animator.SetRandomAnimatorTrigger(DeathState);
+    }
+}
+
+
+[Serializable]
 public class EnemyDeath
 {
     [SerializeField] private EnemyHealth _health;
