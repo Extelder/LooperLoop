@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
+
     public virtual void Hit(int damage)
     {
-        Debug.LogError(gameObject.name + " " + damage);
     }
 }

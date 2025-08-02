@@ -8,6 +8,8 @@ using UnityEngine.AI;
 [Serializable]
 public abstract class Attack
 {
+    [field: SerializeField] public Material Material { get; private set; }
+
     [SerializeField] private int _damage;
 
     [SerializeField] private float _checkRate;
@@ -127,6 +129,7 @@ public class EnemyAttack
 
     ~EnemyAttack()
     {
+        CurrentAttack = null;
         _disposable?.Clear();
     }
 }

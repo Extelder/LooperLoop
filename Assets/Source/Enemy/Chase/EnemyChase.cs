@@ -9,6 +9,7 @@ using UnityEngine.AI;
 [Serializable]
 public abstract class Chase
 {
+    [field: SerializeField] public Material Material;
     [field: SerializeField] public AnimatorRandomState ChaseState { get; private set; }
 
     [SerializeField] private float _speed;
@@ -45,7 +46,7 @@ public abstract class Chase
 public class BaseChase : Chase
 {
     [SerializeField] private AnimatorRandomState _chaseEndState;
-    
+
     public override void StartChase()
     {
         Debug.LogError("Stop");
@@ -87,7 +88,7 @@ public class EnemyChase
     [SerializeReference] [SerializeReferenceButton]
     private Chase[] _chases;
 
-    private Chase _currentChase;
+    public Chase CurrentChase { get; private set; }
 
     private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -97,17 +98,24 @@ public class EnemyChase
 
         Debug.LogError(random);
 
-        _currentChase = _chases[random];
-        _currentChase.Activate(_agent, _animator);
+        CurrentChase = _chases[random];
+        CurrentChase.Activate(_agent, _animator);
+    }
+
+    ~EnemyChase()
+    {
+        _disposable.Clear();
+        CurrentChase.StopChase();
+        CurrentChase = null;
     }
 
     public void StartChase()
     {
-        _currentChase.StartChase();
+        CurrentChase.StartChase();
     }
 
     public void StopChase()
     {
-        _currentChase.StopChase();
+        CurrentChase.StopChase();
     }
 }
