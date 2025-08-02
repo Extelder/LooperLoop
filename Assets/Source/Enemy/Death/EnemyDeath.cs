@@ -54,6 +54,26 @@ public class BrutalDeath: Death
     }
 }
 
+[Serializable]
+public class ShakeDanceDeath : Death
+{
+    public override void PerformDeath()
+    {
+        Enemy.Kill();
+        Animator.SetRandomAnimatorTrigger(DeathState);
+    }
+}
+
+[Serializable]
+public class EpicDeath : Death
+{
+    public override void PerformDeath()
+    {
+        Enemy.Kill();
+        Animator.SetRandomAnimatorTrigger(DeathState);
+    }
+}
+
 
 [Serializable]
 public class EnemyDeath
