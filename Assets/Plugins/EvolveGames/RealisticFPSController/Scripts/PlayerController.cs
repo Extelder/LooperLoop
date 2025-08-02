@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 namespace EvolveGames
@@ -50,7 +51,7 @@ namespace EvolveGames
         bool isCrough = false;
         float InstallCroughHeight;
         float rotationX = 0;
-        [HideInInspector] public bool isRunning = false;
+        [HideInInspector] public ReactiveProperty<bool> isRunning = new ReactiveProperty<bool>(false);
         Vector3 InstallCameraMovement;
         float InstallFOV;
         Camera cam;
@@ -88,10 +89,10 @@ namespace EvolveGames
 
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
-            isRunning = !isCrough ? CanRunning ? Input.GetKey(KeyCode.LeftShift) : false : false;
-            vertical = canMove ? (isRunning ? RunningValue : WalkingValue) * Input.GetAxis("Vertical") : 0;
-            horizontal = canMove ? (isRunning ? RunningValue : WalkingValue) * Input.GetAxis("Horizontal") : 0;
-            if (isRunning) RunningValue = Mathf.Lerp(RunningValue, RuningSpeed, timeToRunning * Time.deltaTime);
+            isRunning.Value = !isCrough ? CanRunning ? Input.GetKey(KeyCode.LeftShift) : false : false;
+            vertical = canMove ? (isRunning.Value ? RunningValue : WalkingValue) * Input.GetAxis("Vertical") : 0;
+            horizontal = canMove ? (isRunning.Value ? RunningValue : WalkingValue) * Input.GetAxis("Horizontal") : 0;
+            if (isRunning.Value) RunningValue = Mathf.Lerp(RunningValue, RuningSpeed, timeToRunning * Time.deltaTime);
             else RunningValue = WalkingValue;
             float movementDirectionY = moveDirection.y;
             moveDirection = (forward * vertical) + (right * horizontal);
@@ -118,7 +119,7 @@ namespace EvolveGames
                 Camera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
                 transform.rotation *= Quaternion.Euler(0, Lookhorizontal * lookSpeed, 0);
 
-                if (isRunning && Moving)
+                if (isRunning.Value && Moving)
                     cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, RunningFOV, SpeedToFOV * Time.deltaTime);
                 else cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, InstallFOV, SpeedToFOV * Time.deltaTime);
             }
