@@ -630,6 +630,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 444655656}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &792869120 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 178021237504806126, guid: 312d0394fe4967749a5f74e679aaa882,
+    type: 3}
+  m_PrefabInstance: {fileID: 444655656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &905292997
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,18 +741,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 82.124, z: 0}
---- !u!114 &1043609328 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9212163744047524350, guid: 312d0394fe4967749a5f74e679aaa882,
-    type: 3}
-  m_PrefabInstance: {fileID: 444655656}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07893344146491d4db94c30f4c231296, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1332816964
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +791,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1339210796 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2343751811335388028, guid: 312d0394fe4967749a5f74e679aaa882,
+    type: 3}
+  m_PrefabInstance: {fileID: 444655656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1398446609
 GameObject:
   m_ObjectHideFlags: 0
@@ -6138,16 +6138,21 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 444655658}
+    - target: {fileID: 4748803221034992626, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
+        type: 3}
+      propertyPath: m_Sources.Array.data[0].sourceTransform
+      value: 
+      objectReference: {fileID: 792869120}
     - target: {fileID: 4910185619086640786, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
         type: 3}
       propertyPath: m_Name
       value: Bo55
       objectReference: {fileID: 0}
-    - target: {fileID: 7019930637734241635, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
+    - target: {fileID: 7523870728896715305, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
         type: 3}
-      propertyPath: _wallet
+      propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 1043609328}
+      objectReference: {fileID: 1339210796}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
