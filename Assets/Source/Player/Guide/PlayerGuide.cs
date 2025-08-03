@@ -40,7 +40,7 @@ public class PlayerGuide : MonoBehaviour
     private IEnumerator Guiding()
     {
         yield return new WaitForSeconds(3);
-        _guideText.text = "Find nearest Enemy Invoker";
+        _guideText.text = "Find and INTERACT nearest Enemy Statue";
         EbakaInvoker.EbakaSpawned += OnEbakaSpawned;
         EbakaInvokerBeginCurrentGoal?.Invoke();
         
