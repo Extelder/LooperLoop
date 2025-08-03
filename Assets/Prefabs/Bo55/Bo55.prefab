@@ -12886,6 +12886,7 @@ GameObject:
   - component: {fileID: 4351947398350478388}
   - component: {fileID: 7019930637734241635}
   - component: {fileID: 1353108749550568802}
+  - component: {fileID: 3833102621618976028}
   m_Layer: 8
   m_Name: Ebaka
   m_TagString: Untagged
@@ -12984,7 +12985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a78e5e6d278674a8651d9bd531c8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MoneyValue>k__BackingField: 200
   _enemyChase:
     _agent: {fileID: 4231749277302556981}
     _animator: {fileID: 1988135943227512810}
@@ -13350,6 +13350,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3833102621618976028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9078811966215006138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e24aecb5588c546a279c4da939bae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyHealth: {fileID: 6926884117183422438}
+  _enemy: {fileID: 3286792733332935786}
+  _healthScale: 0.2
+  _rewardPerHP: 0.05
 --- !u!1 &9154860258617159662
 GameObject:
   m_ObjectHideFlags: 0
@@ -13720,7 +13736,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8d981a6b7eba93f498c79ec9c6bda62f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: 8d981a6b7eba93f498c79ec9c6bda62f,
         type: 3}

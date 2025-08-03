@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [field: SerializeField] public int MoneyValue { get; set; }
+    public int MoneyValue { get; set; }
 
     [SerializeField] private EnemyChase _enemyChase;
     [Space(20)] [SerializeField] private EnemyAttack _enemyAttack;
@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public event Action Bootstrapped;
     public event Action DeathEnded;
     public event Action<int> Dead;
+    public event Action<int> MoneyBootstraped;
     public event Action<Chase> ChaseBootstrapped;
     public event Action<Attack> AttackBootstrapped;
     public event Action<Ultimate> UltimateBootstrapped;
