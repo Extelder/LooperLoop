@@ -17,11 +17,17 @@ public abstract class Ultimate
     public virtual void Activate(Transform player)
     {
         Player = player;
+        WaitingForUltimate();
     }
 
     public abstract void PerformUltimate();
 
     public abstract void OnKilled();
+
+    public virtual async UniTask WaitingForUltimate()
+    {
+        
+    }
 }
 
 [Serializable]
@@ -44,13 +50,7 @@ public class LaserUltimate : Ultimate
 
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-    public override void Activate(Transform player)
-    {
-        base.Activate(player);
-        WaitingForUltimate();
-    }
-
-    public async UniTask WaitingForUltimate()
+    public override async UniTask WaitingForUltimate()
     {
         while (true)
         {
@@ -131,6 +131,56 @@ public class LaserUltimate : Ultimate
     public void Damaging(PlayerHitBox hitBox)
     {
         hitBox.Hit(_damage);
+    }
+}
+
+[Serializable]
+public class BombSpammerUltimate : Ultimate
+{
+    [SerializeField] private Transform _attackPoint;
+    
+    [SerializeField] private Pool _bombPool;
+
+    [SerializeField] private float _rate;
+    [SerializeField] private float _throwRate;
+    [SerializeField] private float _duration;
+    
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private float _distance;
+    
+    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    private CompositeDisposable _disposable = new CompositeDisposable();
+    
+    public override async UniTask WaitingForUltimate()
+    {
+        while (true)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_rate), cancellationToken: _cancellationTokenSource.Token);
+
+            PerformUltimate();
+            await UniTask.Delay(TimeSpan.FromSeconds(_duration), cancellationToken: _cancellationTokenSource.Token);
+            _disposable.Clear();
+        }
+    }
+    
+    public override void PerformUltimate()
+    {
+        Observable.Interval(TimeSpan.FromSeconds(_throwRate)).Subscribe(_ =>
+        {
+            if (Physics.Raycast(_attackPoint.position, Player.position - _attackPoint.position, out RaycastHit hit, _distance, _layerMask))
+            {
+                if (hit.collider.TryGetComponent<PlayerHitBox>(out PlayerHitBox playerHitBox))
+                {
+                    _bombPool.GetFreeElement(_attackPoint.position, Quaternion.identity, null);
+                }
+            }
+        }).AddTo(_disposable);
+    }
+
+    public override void OnKilled()
+    {
+        _cancellationTokenSource?.Cancel();
+        _disposable?.Clear();
     }
 }
 

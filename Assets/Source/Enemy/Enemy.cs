@@ -9,17 +9,19 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
+    [field: SerializeField] public int MoneyValue { get; set; }
+
     [SerializeField] private EnemyChase _enemyChase;
     [Space(20)] [SerializeField] private EnemyAttack _enemyAttack;
     [Space(20)] [SerializeField] private EnemyUltimate _enemyUltimate;
     [Space(20)] [SerializeField] private EnemyDeath _enemyDeath;
 
     public event Action Bootstrapped;
+    public event Action DeathEnded;
+    public event Action<int> Dead;
     public event Action<Chase> ChaseBootstrapped;
     public event Action<Attack> AttackBootstrapped;
     public event Action<Ultimate> UltimateBootstrapped;
-
-    public static event Action Killed;
 
     private bool _active = true;
 
@@ -41,17 +43,26 @@ public class Enemy : MonoBehaviour
 
     public void Kill()
     {
+        if (!_active)
+        {
+            return;
+        }
         _active = false;
         _enemyChase.Kill();
         _enemyAttack.Kill();
         _enemyUltimate.Kill();
-        Killed?.Invoke();
+        Dead?.Invoke(MoneyValue);
     }
 
     public void AttackStarted()
     {
         if (_active)
             _enemyChase.StopChase();
+    }
+
+    public void EnemyDeathEnded()
+    {
+        DeathEnded?.Invoke();
     }
 
     public void PerformAttack()
