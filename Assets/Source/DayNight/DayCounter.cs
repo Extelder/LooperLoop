@@ -5,18 +5,24 @@ using UnityEngine;
 
 public class DayCounter : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        
-    }
+    [field:SerializeField] public int Current { get; private set; }
+    
+    public static DayCounter Instance { get; private set; }
 
-    private void OnDayChanged(int value)
+    public event Action<int> DayChanged;
+    
+    private void Awake()
     {
-        
+        if (!Instance)
+        {
+            Instance = this;
+            return;
+        }
     }
     
-    private void OnDisable()
+    public void ChangeDay()
     {
-        
+        Current++;
+        DayChanged?.Invoke(Current);
     }
 }

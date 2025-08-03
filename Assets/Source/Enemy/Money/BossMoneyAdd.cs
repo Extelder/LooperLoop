@@ -6,8 +6,7 @@ using UnityEngine;
 public class BossMoneyAdd : MonoBehaviour
 {
     [SerializeField] private Enemy _enemy;
-    [SerializeField] private PlayerWallet _wallet;
-    
+
     private void OnEnable()
     {
         _enemy.Dead += AddMoney;
@@ -15,7 +14,7 @@ public class BossMoneyAdd : MonoBehaviour
 
     public void AddMoney(int value)
     {
-        _wallet.Add(value);
+        PlayerWallet.Instance.Add(value);
     }
 
     private void OnDisable()

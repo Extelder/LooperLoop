@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     private bool _active = true;
 
+    public static event Action Killed;
+
     private void Start()
     {
         _enemyChase.Init();
@@ -47,6 +49,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+        Killed?.Invoke();
         _active = false;
         _enemyChase.Kill();
         _enemyAttack.Kill();
