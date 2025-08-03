@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 //using UnityEngine.Events;
 
 namespace Sydewa
@@ -71,6 +74,9 @@ public class LightingManager : MonoBehaviour
         [SerializeField] private float eventsTolerance = 0.2f;
         [SerializeField][Range(0f, 24f)] private float ResetEventsTime = 0.1f;
         private bool DayCycleCompleted;
+
+        public event Action<int> DayChanged;
+        private int _day;
 
     #endregion
 

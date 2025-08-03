@@ -19,6 +19,6 @@ public class ThrowBomb : MonoBehaviour
     private void Throw()
     {
         _rigidbody.AddForce(Vector3.up, ForceMode.Impulse);
-        _rigidbody.AddForce(_player.position - transform.position * _force, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.Normalize(_player.position - transform.position) * _force, ForceMode.Impulse);
     }
 }

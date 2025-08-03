@@ -179,6 +179,7 @@ public class BombSpammerUltimate : Ultimate
 
     public override void OnKilled()
     {
+        _cancellationTokenSource?.Cancel();
         _disposable?.Clear();
     }
 }
