@@ -24,20 +24,24 @@ public class PlayerInteract : MonoBehaviour
         {
             if (_hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
             {
-                if (_currentInteractable != interactable)
-                {
-                    _currentInteractable?.InteractLost();
-                    InteractedLost?.Invoke();
-                }
+                if (_currentInteractable != null)
+                    _currentInteractable.InteractLost();
 
                 _currentInteractable = interactable;
-                interactable.InteractDetected();
+                _currentInteractable.InteractDetected();
                 InteractedDetected?.Invoke();
                 return;
             }
+
+            if (_currentInteractable != null)
+                _currentInteractable.InteractLost();
+            InteractedLost?.Invoke();
+            _currentInteractable = null;
         }
 
-        _currentInteractable?.InteractLost();
+
+        if (_currentInteractable != null)
+            _currentInteractable.InteractLost();
         InteractedLost?.Invoke();
         _currentInteractable = null;
     }

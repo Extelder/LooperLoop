@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     public event Action<Attack> AttackBootstrapped;
     public event Action<Ultimate> UltimateBootstrapped;
 
+    public static event Action Killed;
+
     private bool _active = true;
 
     private void Start()
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
         _enemyChase.Kill();
         _enemyAttack.Kill();
         _enemyUltimate.Kill();
+        Killed?.Invoke();
     }
 
     public void AttackStarted()

@@ -13,7 +13,6 @@ public class GenerateMap : MonoBehaviour
 
     [SerializeField] private HeightsGenerator _heightsGenerator;
     [SerializeField] private TreeGenerator _treeGenerator;
-    [SerializeField] private GrassTerrainGenerator _grassGenerator;
     [SerializeField] private TerrainTextureHeightGenerator _terrainTextureHeightGenerator;
 
     [SerializeField] private EnviroSpawn_CS _enviroSpawn;
@@ -23,7 +22,6 @@ public class GenerateMap : MonoBehaviour
         _terrainCollider.enabled = false;
         _heightsGenerator.Generate();
         _treeGenerator.Generate();
-        _grassGenerator.Generate();
         _terrainTextureHeightGenerator.Generate();
         _terrainCollider.enabled = true;
         EnviroSpawn_CS.MassInstantiateNew();

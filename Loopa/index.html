@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>LooperLoop</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <!-- Yandex Games SDK -->
+    <script src="https://yandex.ru/games/sdk/v2"></script>
+  </head>
+  <body class="dark">
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-cover" style="display:none;">
+      <div id="unity-loading-bar">
+        <div id="unity-logo"><img src="logo.png"></div>
+        <div id="unity-progress-bar-empty" style="display: none;">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div id="unity-fullscreen-button" style="display: none;"></div>
+    <script>
+      const hideFullScreenButton = "true";
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/Loopa.loader.js";
+      const config = {
+        dataUrl: buildUrl + "/Loopa.data.unityweb",
+        frameworkUrl: buildUrl + "/Loopa.framework.js.unityweb",
+        codeUrl: buildUrl + "/Loopa.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "ENU",
+        productName: "LooperLoop",
+        productVersion: "0.3",
+      };
+
+      const container = document.querySelector("#unity-container");
+      const canvas = document.querySelector("#unity-canvas");
+      const loadingCover = document.querySelector("#loading-cover");
+      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+      const progressBarFull = document.querySelector("#unity-progress-bar-full");
+      const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      const spinner = document.querySelector('.spinner');
+
+      const canFullscreen = (function() {
+        for (const key of [
+            'exitFullscreen',
+            'webkitExitFullscreen',
+            'webkitCancelFullScreen',
+            'mozCancelFullScreen',
+            'msExitFullscreen',
+          ]) {
+          if (key in document) {
+            return true;
+          }
+        }
+        return false;
+      }());
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+      }
+      loadingCover.style.display = "";
+      var player;
+      var sdk;
+      var payments = null;
+      var newInstance = null;
+
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          spinner.style.display = "none";
+          progressBarEmpty.style.display = "";
+          progressBarFull.style.width = `${100 * progress}%`;
+        }).then((unityInstance) => {
+        newInstance = unityInstance;
+          loadingCover.style.display = "none";
+          if (canFullscreen) {
+            if (!hideFullScreenButton) {
+              fullscreenButton.style.display = "";
+            }
+            fullscreenButton.onclick = () => {
+              newInstance.SetFullscreen(1);
+            };
+          }
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+            YaGames.init({
+            adv: {
+                onAdvClose: wasShown => {
+                      console.info('adv closed!');
+                }
+            }
+        })
+        .then(ysdk => {
+            sdk = ysdk;
+            sdk.adv.showFullscreenAdv({callbacks:{}});
+      });
+
+
+      function auth(){
+        sdk.auth.openAuthDialog().then(() => {
+                // ����� ������� �����������, ������ ������ Player ����� ���������������.
+                initPlayer();
+                console.log('auth ok');
+            }).catch(() => {
+                 // ����� �� �����������.
+                 console.log('auth failed');
+            });
+      }
+
+      function initPlayer(){
+        return sdk.getPlayer().then(_player => {
+                player = _player;       
+            }).catch(err => {
+                // ���� ����� �� �����������, ����������� ���������� USER_NOT_AUTHORIZED.
+            });
+      }
+
+      function getUserData(){
+        if(initPlayer){
+          var data = {"id" : player.getID(), "name" : player.getName(), "avatarUrlSmall" : player.getPhoto('small'), "avatarUrlMedium" : player.getPhoto('medium'), "avatarUrlLarge" : player.getPhoto('large')};
+          newInstance.SendMessage('YandexSDK', 'StoreUserData', JSON.stringify(data));
+        }
+      }
+
+      function showFullscrenAd(){
+        sdk.adv.showFullscreenAdv({
+          callbacks: {
+            onClose: function(wasShown) {
+              newInstance.SendMessage('YandexSDK', 'OnInterstitialShown');
+            },
+            onError: function(error) {
+              newInstance.SendMessage('YandexSDK', 'OnInterstitialFailed', error);
+            }
+          }
+        })
+      }
+
+      function showRewardedAd(id){
+        sdk.adv.showRewardedVideo({
+        callbacks: {
+            onOpen: () => {
+                newInstance.SendMessage('YandexSDK', 'OnRewardedOpen', id);
+                console.log('Video ad open. Id: ' + id);
+            },
+            onRewarded: () => {
+                newInstance.SendMessage('YandexSDK', 'OnRewarded', id);
+                console.log('Rewarded! Id: ' + id);
+            },
+            onClose: () => {
+                newInstance.SendMessage('YandexSDK', 'OnRewardedClose', id);
+                console.log('Video ad closed. Id: ' + id);
+            }, 
+            onError: (e) => {
+                var data = {"id" : id, "error" : error};
+                newInstance.SendMessage('YandexSDK', 'OnRewardedError', JSON.stringify(data));
+                console.log('Error while open video ad:', e);
+            }
+          }
+        })
+      }
+
+      function initPayments(){
+        sdk.getPayments().then(_payments => {
+          // ������� ��������.
+          payments = _payments;
+        }).catch(err => {
+        })
+      }
+
+      function buy(id){
+        payments.purchase(id).then(purchase => {
+          // ������� ������� ���������!
+          newInstance.SendMessage('YandexSDK', 'OnPurchaseSuccess', id);
+        }).catch(err => {
+          // ������� �� �������: � ������� ������������ �� �������� ����� � ����� id,
+          // ������������ �� �������������, ��������� � ������ ���� ������,
+          // ������� ���������� �� ������� �����, �� ������� ����� � �. �.
+          newInstance.SendMessage('YandexSDK', 'OnPurchaseFailed', err);
+        })
+      }
+
+      window.onbeforeunload = function(e) {
+        console.log("Calling OnClose from Browser!");
+        gameInstance.SendMessage("YandexSDK", "OnClose");
+    
+        var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
+        e.returnValue = dialogText;
+        return dialogText;
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
