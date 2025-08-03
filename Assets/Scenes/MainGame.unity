@@ -13046,7 +13046,7 @@ MonoBehaviour:
   RandomStartTime: 0
   TimeOfDay: 14.2
   StartTime: 14.2
-  CycleDuration: 230
+  CycleDuration: 20
   morningInterval: {x: 0, y: 0.5}
   afterNoonInterval: {x: 0.5, y: 1}
   lightIntensity: {x: 0, y: 2}

@@ -10,6 +10,7 @@ public class BombDamage : MonoBehaviour
     [SerializeField] private int _bombDamage;
     [SerializeField] private Collider _collider;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private ParticleSystem _particle;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -33,8 +34,10 @@ public class BombDamage : MonoBehaviour
             {
                 playerHitBox.Hit(_bombDamage);
             }
-            gameObject.SetActive(false);
         }
+        _particle.Play();
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()
