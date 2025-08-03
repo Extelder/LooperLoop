@@ -6138,68 +6138,21 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 444655658}
-    - target: {fileID: 3286792733332935786, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
-        type: 3}
-      propertyPath: <MoneyValue>k__BackingField
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 3690318756695463517, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
-        type: 3}
-      propertyPath: _wallet
-      value: 
-      objectReference: {fileID: 1043609328}
-    - target: {fileID: 3741204825890537825, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
-        type: 3}
-      propertyPath: _coins
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4910185619086640786, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
         type: 3}
       propertyPath: m_Name
       value: Bo55
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2362195907596827710, guid: 1f7363b0f90f5bb428e9a4a42457cdf5, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9078811966215006138, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
+    - target: {fileID: 7019930637734241635, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
         type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1050386308291433093}
+      propertyPath: _wallet
+      value: 
+      objectReference: {fileID: 1043609328}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f7363b0f90f5bb428e9a4a42457cdf5, type: 3}
---- !u!1 &1050386308291433092 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9078811966215006138, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1050386308291433091}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1050386308291433093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050386308291433092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cbfac2dc5583a14889320c45b191ab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 1050386308291433094}
-  _wallet: {fileID: 1043609328}
---- !u!114 &1050386308291433094 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3286792733332935786, guid: 1f7363b0f90f5bb428e9a4a42457cdf5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1050386308291433091}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050386308291433092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52a78e5e6d278674a8651d9bd531c8cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4868144303826854061
 PrefabInstance:
   m_ObjectHideFlags: 0
