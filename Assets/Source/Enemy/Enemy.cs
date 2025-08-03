@@ -26,9 +26,11 @@ public class Enemy : MonoBehaviour
     private bool _active = true;
 
     public static event Action Killed;
+    public static event Action Spawned;
 
     private void Start()
     {
+        Spawned?.Invoke();
         _enemyChase.Init();
         ChaseBootstrapped?.Invoke(_enemyChase.CurrentChase);
         _enemyAttack.Init();

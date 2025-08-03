@@ -24,7 +24,25 @@ public class GenerateMap : MonoBehaviour
         _treeGenerator.Generate();
         _terrainTextureHeightGenerator.Generate();
         _terrainCollider.enabled = true;
-        EnviroSpawn_CS.MassInstantiateNew();
         _navMeshSurface.BuildNavMesh();
+        EnviroSpawn_CS.MassInstantiateNew();
+    }
+
+    private void OnEnable()
+    {
+        DayCounter.Instance.DayChanged += OnDayChanged;
+    }
+
+    private void OnDayChanged(int value)
+    {
+        if (value == 10)
+        {
+            EnviroSpawn_CS.MassInstantiateNew();
+        }
+    }
+
+    private void OnDisable()
+    {
+        DayCounter.Instance.DayChanged += OnDayChanged;
     }
 }

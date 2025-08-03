@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88e61b117cddb843a9e89336a5b8275, type: 3}
   m_Name: StaminaBuyable
   m_EditorClassIdentifier: 
-  <Price>k__BackingField: 10
+  <Price>k__BackingField: 100
   <AddibleValue>k__BackingField: 5
